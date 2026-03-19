@@ -15,15 +15,16 @@ private:
 public:
     LinkedList() : head(nullptr), tail(nullptr), count(0) {}
     ~LinkedList() {
-        if(tail == nullptr) { return; }
-        Node* tmp = head;
-        Node* tmp2 = head->next;
-        while(tmp != nullptr) {
-            delete tmp;
-            tmp2 = tmp->next;
-        }
-        count = 0;
+    Node* current = head;
+    while(current != nullptr) {
+        Node* next = current->next;
+        delete current;               
+        current = next;
     }
+    count = 0;
+    head = nullptr;
+    tail = nullptr;
+}
     
     void pushBack(int value) { //добавляет элемент в конец массива
         ++count;
