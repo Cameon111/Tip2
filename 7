@@ -4,7 +4,7 @@ struct Node {
     int data;
     Node* next;
     Node* prev;
-    Node(int value) : data(value), next(nullptr), prev(nullptr) {}
+    Node(int value) : data(value), next(nullptr), prev(nullptr) {} //конструктор
 };
 
 class LinkedList {
@@ -25,7 +25,7 @@ public:
         count = 0;
     }
     
-    void pushBack(int value) {
+    void pushBack(int value) { //добавляет элемент в конец массива
         ++count;
         Node* tmp = new Node(value);
         if(tail == nullptr) {
@@ -37,7 +37,7 @@ public:
             tail = tmp;
         }
     }
-    void pushFront(int value) {
+    void pushFront(int value) { //Добавлякт элемент в начало массива
         ++count;
         Node* tmp = new Node(value);
         if(head == tail && head == nullptr) {
@@ -49,7 +49,7 @@ public:
             head = tmp;
         }
     }
-    void popBack() {
+    void popBack() { //удаляет с конца массива
         --count;
         if(tail == nullptr) { return; }
         if(head == tail) {
@@ -63,7 +63,7 @@ public:
             tail = tmp;
         }
     }
-    void popFront() {
+    void popFront() { // удаляет с начала массива
         --count;
         if(head == nullptr) { return; }
         if(head == tail) {
