@@ -1,0 +1,107 @@
+#include <iostream>
+
+struct Node {
+    int data;
+    Node* next;
+    Node* prev;
+    Node(int value) : data(value), next(nullptr), prev(nullptr) {}
+};
+
+class LinkedList {
+private:
+    Node* head;
+    Node* tail;
+    int count;
+public:
+    LinkedList() : head(nullptr), tail(nullptr), count(0) {}
+    ~LinkedList() {
+        if(tail == nullptr) { return; }
+        Node* tmp = head;
+        Node* tmp2 = head->next;
+        while(tmp != nullptr) {
+            delete tmp;
+            tmp2 = tmp->next;
+        }
+        count = 0;
+    }
+    
+    void pushBack(int value) {
+        ++count;
+        Node* tmp = new Node(value);
+        if(tail == nullptr) {
+            head = tmp;
+            tail = tmp;
+        } else {
+            tail->next = tmp;
+            tmp->prev = tail;
+            tail = tmp;
+        }
+    }
+    void pushFront(int value) {
+        ++count;
+        Node* tmp = new Node(value);
+        if(head == tail && head == nullptr) {
+            head = tmp;
+            tail = tmp;
+        } else {
+            head->prev = tmp;
+            tmp->next = head;
+            head = tmp;
+        }
+    }
+    void popBack() {
+        --count;
+        if(tail == nullptr) { return; }
+        if(head == tail) {
+            delete tail;
+            head = nullptr;
+            tail = nullptr;
+        } else {
+            Node* tmp = tail->prev;
+            tmp->next = nullptr;
+            delete tail;
+            tail = tmp;
+        }
+    }
+    void popFront() {
+        --count;
+        if(head == nullptr) { return; }
+        if(head == tail) {
+            delete head;
+            head = nullptr;
+            tail = nullptr;
+        } else {
+            Node* tmp = head->next;
+            tmp->prev = nullptr;
+            delete head;
+            head = tmp;
+        }
+    }
+    void printForward() {
+        Node* tmp = head;
+        while(tmp != nullptr) {
+            std::cout << tmp->data << ' ';
+            tmp = tmp->next;
+        }
+        std::cout << std::endl;
+    }
+    void printBackward() {
+        Node* tmp = tail;
+        while(tmp != nullptr) {
+            std::cout << tmp->data << ' ';
+            tmp = tmp->prev;
+        }
+        std::cout << std::endl;
+    }
+    
+    int getCount() { return count; }
+};
+
+int main() {
+    LinkedList list;
+    for(int i=0; i<5; i++) { list.pushBack(i+1); }
+    list.printForward(); list.printBackward();
+    list.popFront(); list.popFront(); list.popBack();
+    list.printForward();
+    return 0;
+}
